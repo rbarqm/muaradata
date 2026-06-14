@@ -61,7 +61,7 @@ Password : Admin123!
 ```python
 from muaradata import fetch_data
 
-df = fetch_data("SELECT 1", aim="iriis_ch")
+df = fetch_data("SELECT 1", aim="db_prod")
 ```
 
 ---
@@ -83,7 +83,7 @@ Menjalankan perintah SQL dan mengembalikan hasil sebagai `pandas.DataFrame`.
 ```python
 df = fetch_data(
     query="SELECT * FROM sandbox.test_insert",
-    aim="iriis_ch",
+    aim="db_prod",
     retry_delay=10,
     max_retries=20
 )
@@ -104,7 +104,7 @@ df = fetch_data(
 Digunakan untuk query yang **tidak mengembalikan data**, seperti `INSERT`, `UPDATE`, atau `DELETE`.
 
 ```python
-result = exec_query("DELETE FROM sandbox.test_insert WHERE id = 10", aim="iriis_pg")
+result = exec_query("DELETE FROM sandbox.test_insert WHERE id = 10", aim="db_staging")
 print(result)  # "Query Executed Successfully"
 ```
 
@@ -238,11 +238,11 @@ Args:
     nama_table_source:      Nama tabel di server source, termasuk schema
                             jika diperlukan. Contoh: "public.tx_ticket".
     aim_source:             Alias koneksi source yang terdaftar di credentials.
-                            Contoh: "iriis_pg", "iriis_ch".
+                            Contoh: "db_staging", "db_prod".
     nama_table_destination: Nama tabel yang akan dibuat di server destination.
                             Contoh: "staging_area.tx_ticket".
     aim_destination:        Alias koneksi destination.
-                            Contoh: "iriis_ch", "iriis_pg".
+                            Contoh: "db_prod", "db_staging".
     drop_table:             Jika True, tabel destination di-drop & dibuat ulang
                             jika sudah ada. Default: True.
     with_data:              Jika True, data sample juga ikut dimasukkan ke
