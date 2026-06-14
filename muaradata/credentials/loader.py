@@ -11,8 +11,8 @@ BASE_DIR     = os.path.dirname(os.path.dirname(__file__))
 CREDS_PATH   = os.path.join(BASE_DIR, "credentials", "credentials.enc")
 TUNNELS_PATH = os.path.join(BASE_DIR, "credentials", "tunnels.enc")
 
-KEY_CREDS = _key_path("iriis_creds_store")
-KEY_TUNNS = _key_path("iriis_tunns_store")
+KEY_CREDS    = _key_path("muaradata_creds_store")
+KEY_TUNNS    = _key_path("muaradata_tunns_store")
 
 # ══════════════════════════════════════════════
 # LOADER FUNCTIONS
