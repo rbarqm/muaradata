@@ -1,0 +1,9 @@
+backup_credentials/
+*.csv
+*.csv.*
+*pycache
+*.egg-info
+__pycache__/
+.idea/*
+*.key
+*.enc
