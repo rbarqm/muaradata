@@ -22,23 +22,27 @@ from .cripter import _key_path, generate_key, load_key, encrypt_csv, decrypt_csv
     Copyright  : Copyright 2024, MuaraData Project
 """
 
+
 # ══════════════════════════════════════════════════════════════
 # PATH & KONSTANTA
 # ══════════════════════════════════════════════════════════════
-#
+
 #  File .enc  → disimpan di direktori project (BASE_DIR), boleh di-commit
 #               karena sudah terenkripsi.
-#
+
 #  File .key  → disimpan di system config dir OS, TIDAK di project:
 #               Linux   : ~/.config/muaradata/
 #               macOS   : ~/Library/Application Support/muaradata/
 #               Windows : C:\Users\<user>\AppData\Local\muaradata\
-#
+
 #               Nama file di-hash dari seed internal sehingga tidak
 #               mengandung kata "key", "kunci", atau nama engine apapun.
 #               Contoh hasil: 0e8ebdd27d82.dat
-#
+
 # ══════════════════════════════════════════════════════════════
+
+
+_USER_ENGINE = getpass.getuser()
 
 BASE_DIR   = os.path.dirname(os.path.abspath(__file__))
 
@@ -46,9 +50,9 @@ USER_PATH    = os.path.join(BASE_DIR, 'users.enc')
 CREDS_PATH   = os.path.join(BASE_DIR, 'credentials.enc')
 TUNNELS_PATH = os.path.join(BASE_DIR, 'tunnels.enc')
 
-KEY_USERS    = _key_path("muaradata_users_store")
-KEY_CREDS    = _key_path("muaradata_creds_store")
-KEY_TUNNS    = _key_path("muaradata_tunns_store")
+KEY_USERS    = _key_path(f"{_USER_ENGINE}_muaradata_users_store")
+KEY_CREDS    = _key_path(f"{_USER_ENGINE}_muaradata_creds_store")
+KEY_TUNNS    = _key_path(f"{_USER_ENGINE}_muaradata_tunns_store")
 
 COLS_USER   = ['id', 'name', 'password', 'first_name', 'last_name', 'role', 'active']
 COLS_CREDS  = ['id', 'owner', 'name', 'host', 'port', 'username', 'password',
@@ -56,10 +60,10 @@ COLS_CREDS  = ['id', 'owner', 'name', 'host', 'port', 'username', 'password',
 COLS_TUNNEL = ['id', 'owner', 'name', 'host_tunnel', 'user_tunnel', 'pass_tunnel']
 
 MAP_DRIVER = {
-    '1': ['clickhouse_driver',  'clickhouse'],
-    '2': ['psycopg2',           'postgresql'],
-    '3': ['clickhouse_connect', 'clickhouse'],
-    '4': ['mysql',              'mysql'],
+    '1': ['Clickhouse TCP', 'clickhouse', '9000'],
+    '2': ['Clickhouse HTTP', 'clickhouse', '8123'],
+    '3': ['PostgreSQL', 'postgresql', '5432'],
+    '4': ['MySQL / MariaDB', 'mysql', '3306'],
 }
 
 SESSION: dict = {"user": None}
@@ -510,12 +514,12 @@ def tunnel_delete():
 # CREDENTIAL CRUD
 # ══════════════════════════════════════════════════════════════
 
-def _pick_driver(default_mtd='', default_drv=''):
+def _pick_driver(default_mtd='', default_drv='', default_port=''):
     print("Methode:")
     for k, v in MAP_DRIVER.items():
         print(f"  {k}. {v[0]}")
     inp = input("Pilih (kosong = tidak ubah): ").strip()
-    return MAP_DRIVER.get(inp, [default_mtd, default_drv])
+    return MAP_DRIVER.get(inp, [default_mtd, default_drv, default_port])
 
 
 def _pick_tunnel(key_tunl_unused=None):
@@ -549,14 +553,15 @@ def cred_add():
     divider("TAMBAH CREDENTIAL")
     all_c  = load_creds()
     ids    = next_id(all_c)
+    
+    mtd, drv, port = _pick_driver()
     nama   = input("Nama Koneksi  : ").strip()
-    host   = input("Host          : ").strip()
-    port   = input("Port          : ").strip()
+    host   = input("Host          : ").strip()    
+    port   = input(f"Port [{port}] : ").strip() or port
     user   = input("Username      : ").strip()
-    pw     = input_pass("Password", hide=not is_admin())
+    pw     = input("Password      : ").strip()
     db     = input("Database      : ").strip()
-    mtd, drv = _pick_driver()
-
+    
     use_tun, nm_tun = False, None
     if input("Pakai Tunnel? (Y/N): ").strip().upper() == 'Y':
         use_tun, nm_tun = _pick_tunnel()
@@ -721,7 +726,7 @@ def main():
             elif command == "reset":
                 clearout()
             
-            elif command == "help":
+            elif command == "help" or command == "--help" or command == "-h":
                 import textwrap 
                 
                 pesan_help = """

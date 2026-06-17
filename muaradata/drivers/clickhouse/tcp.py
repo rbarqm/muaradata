@@ -1,10 +1,11 @@
 import warnings
 warnings.filterwarnings('ignore')
+
 import pandas as pd
 from sshtunnel import SSHTunnelForwarder
 from clickhouse_driver import Client
 from rich.console import Console
-from iriis_connection_library.drivers.clickhouse.client_base import BaseCHClient
+from .client_base import BaseCHClient
 
 console = Console(log_path=False)
 
@@ -32,7 +33,7 @@ class ClickHouseTCPClient(BaseCHClient):
                 (host_tunnel, 22),
                 ssh_username=user_tunnel,
                 ssh_password=pass_tunnel,
-                remote_bind_address=(host, port)
+                remote_bind_address=(host, 9000)
             )
 
             self.tunnel.start()
@@ -48,6 +49,7 @@ class ClickHouseTCPClient(BaseCHClient):
         else:
             self.client = Client(
                 host=host,
+                port=port,
                 user=self.creds["username"],
                 password=self.creds["password"],
                 settings={"use_numpy": True},

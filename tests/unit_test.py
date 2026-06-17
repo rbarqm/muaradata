@@ -3,29 +3,28 @@ warnings.filterwarnings("ignore")
 
 import os
 import sys
-import hashlib
+# import hashlib
+import getpass
 import socket
 import pandas as pd
 from tabulate import tabulate
 from time import sleep
 from platformdirs import user_config_dir
 
+from muaradata.credentials.cripter import _key_path
 
 BASE_DIR  = os.path.dirname(os.path.abspath(__file__))
 CRED_DIR  = os.path.abspath(os.path.join(BASE_DIR, '..', 'muaradata', 'credentials'))
 
 # ── Path .dat (di system config dir OS, sama persis dengan app.py) ──
-_KEY_DIR = user_config_dir(appname="muaradata", appauthor=False)
-
-def _key_path(seed: str) -> str:
-    filename = hashlib.sha1(seed.encode()).hexdigest()[:12] + ".dat"
-    return os.path.join(_KEY_DIR, filename)
+_KEY_DIR     = user_config_dir(appname="muaradata", appauthor=False)
+_USER_ENGINE = getpass.getuser()
 
 CREDS_PATH   = os.path.join(CRED_DIR, 'credentials.enc')
 TUNNELS_PATH = os.path.join(CRED_DIR, 'tunnels.enc')
 
-KEY_CREDS = _key_path("muaradata_creds_store")
-KEY_TUNNS = _key_path("muaradata_tunns_store")
+KEY_CREDS = _key_path(f"{_USER_ENGINE}_muaradata_creds_store")
+KEY_TUNNS = _key_path(f"{_USER_ENGINE}_muaradata_tunns_store")
 
 
 # Tambahkan cred_dir ke path agar cripter bisa di-import
@@ -39,9 +38,9 @@ except ImportError as e:
     sys.exit(1)
 
 try:
-    from iriis_connection_library import fetch_data, fetch_data, insert_data
+    from muaradata import fetch_data, fetch_data, insert_data
 except ImportError as e:
-    print(f"[ERROR] Gagal import iriis_connection_library: {e}")
+    print(f"[ERROR] Gagal import muaradata: {e}")
     sys.exit(1)
 
 
@@ -248,7 +247,7 @@ def test_all():
 
 MENU = """
 ╔══════════════════════════════════════════════════════╗
-║              IRIIS — Connection Tester               ║
+║           Muara Data — Connection Tester             ║
 ╠══════════════════════════════════════════════════════╣
 ║  [1]  Test Tunnel                                    ║
 ║  [2]  Test DB Connection                             ║

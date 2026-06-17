@@ -2,17 +2,20 @@ import os
 import hashlib
 import pandas as pd
 from pathlib import Path
+import getpass
 
 from .cripter import _key_path, load_key, decrypt_csv
 
 # ── Path .enc (tetap di folder project) ──
+_USER_ENGINE = getpass.getuser()
+
 BASE_DIR     = os.path.dirname(os.path.dirname(__file__))
 
 CREDS_PATH   = os.path.join(BASE_DIR, "credentials", "credentials.enc")
 TUNNELS_PATH = os.path.join(BASE_DIR, "credentials", "tunnels.enc")
 
-KEY_CREDS    = _key_path("muaradata_creds_store")
-KEY_TUNNS    = _key_path("muaradata_tunns_store")
+KEY_CREDS    = _key_path(f"{_USER_ENGINE}_muaradata_creds_store")
+KEY_TUNNS    = _key_path(f"{_USER_ENGINE}_muaradata_tunns_store")
 
 # ══════════════════════════════════════════════
 # LOADER FUNCTIONS

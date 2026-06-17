@@ -1,5 +1,5 @@
-from iriis_connection_library.drivers.clickhouse.tcp import ClickHouseTCPClient
-from iriis_connection_library.drivers.clickhouse.http import ClickHouseHTTPClient
+from .tcp import ClickHouseTCPClient
+from .http import ClickHouseHTTPClient
 
 class ClickHouseDriver:
     def __init__(self, creds, tunnels):
@@ -10,7 +10,7 @@ class ClickHouseDriver:
     def connect(self):
         method = self.creds.get("methode", 1)
         
-        if method == 3:
+        if method == 'Clickhouse HTTP':
             self.client = ClickHouseHTTPClient(self.creds).connect()
         else:            
             self.client = ClickHouseTCPClient(self.creds, self.tunnels).connect()

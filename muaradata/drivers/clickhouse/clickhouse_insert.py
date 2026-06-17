@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
-from iriis_connection_library.core.insert_base import BaseInserter
 from time import sleep
+from ...core.insert_base import BaseInserter
 
 class ClickHouseInserter(BaseInserter):
     

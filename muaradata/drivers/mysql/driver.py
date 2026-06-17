@@ -1,9 +1,11 @@
 import pandas as pd
 import numpy as np
 import mysql.connector
+
 from sshtunnel import SSHTunnelForwarder
 from rich.console import Console
-from iriis_connection_library.core.pool import ConnectionPool
+
+from ...core.pool import ConnectionPool
 
 console = Console(log_path=False)
 

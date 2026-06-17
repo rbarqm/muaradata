@@ -4,7 +4,7 @@ import psycopg2
 import psycopg2.extras
 from rich.console import Console
 from sshtunnel import SSHTunnelForwarder
-from iriis_connection_library.core.pool import ConnectionPool
+from ...core.pool import ConnectionPool
 
 console = Console(log_path=False)
 

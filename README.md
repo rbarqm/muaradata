@@ -293,7 +293,7 @@ Contoh penggunaan:
 
 **Author    :** Redian Barqy Muhammad  
 **Email :** rbm.eki@gmail.com    
-**Copyright :** © 2025 MuaraData Project  
+**Copyright :** © 2024 MuaraData Project  
 
 
 MIT License

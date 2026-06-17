@@ -2,7 +2,7 @@ import os
 import pandas as pd
 import clickhouse_connect
 from rich.console import Console
-from iriis_connection_library.drivers.clickhouse.client_base import BaseCHClient
+from .client_base import BaseCHClient
 
 console = Console(log_path=False)
 

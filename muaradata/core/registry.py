@@ -1,6 +1,6 @@
-from iriis_connection_library.drivers.clickhouse.driver import ClickHouseDriver
-from iriis_connection_library.drivers.postgresql.driver import PostgresDB
-from iriis_connection_library.drivers.mysql.driver import MySQLConnector
+from ..drivers.clickhouse.driver import ClickHouseDriver
+from ..drivers.postgresql.driver import PostgresDB
+from ..drivers.mysql.driver import MySQLConnector
 
 REGISTRY = {
     "clickhouse": ClickHouseDriver,

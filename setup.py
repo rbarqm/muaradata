@@ -1,8 +1,16 @@
-from setuptools import setup, find_packages
+########################################
+
+import sys
+try:
+    from setuptools import setup, find_packages
+except ImportError:
+    from distutils.core import setup
+
+########################################
 
 setup(
     name="muaradata",
-    version="1.0.0",    
+    version="0.1.0",
     author="Redian Barqy M",
     author_email="rbm.eki@gmail.com",
     description="Pustaka Python untuk koneksi multi-database dengan fitur auto-retry dan SSH tunneling.",
@@ -23,7 +31,7 @@ setup(
         "rich",
         "tabulate",
         "cryptography",
-        "platformdirs"
+        "platformdirs",
     ],
     
     classifiers=[
@@ -31,6 +39,8 @@ setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
+    
+    url="https://github.com/rbarqm/muaradata",
     
     python_requires='>=3.7',
     

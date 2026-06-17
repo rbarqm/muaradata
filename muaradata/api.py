@@ -5,13 +5,18 @@ import pandas as pd
 
 from rich.console import Console
 
-from muaradata.credentials.loader import load_credentials
-from muaradata.credentials.loader import load_tunnels
-from muaradata.core.registry import REGISTRY
-from muaradata.core.insert_registry import INSERT_REGISTRY
-from muaradata.core.normalize import normalize_df
-from muaradata.core.table_registry import TABLE_REGISTRY
-from muaradata.core.retry import with_retry, RetryConfig
+from .credentials.loader import load_credentials
+from .credentials.loader import load_tunnels
+from .core.registry import REGISTRY
+from .core.insert_registry import INSERT_REGISTRY
+from .core.normalize import normalize_df
+from .core.table_registry import TABLE_REGISTRY
+from .core.retry import with_retry, RetryConfig
+
+"""
+    Author     : Redian Barqy Muhammad <rbm.eki@gmail.com>
+    Copyright  : Copyright 2024, MuaraData Project
+"""
 
 retry_cfg_run = RetryConfig(retries=5, delay=5, backoff=2)
 retry_cfg_exec = RetryConfig(retries=1, delay=2, backoff=2)

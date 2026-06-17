@@ -1,5 +1,5 @@
-from iriis_connection_library.core.table_base import BaseTableGenerator
-from iriis_connection_library.core.dtype import pandas_dtypes
+from ...core.table_base import BaseTableGenerator
+from ...core.dtype import pandas_dtypes
 
 MAPPING_MYSQL = {
     'OBJECT': 'TEXT',

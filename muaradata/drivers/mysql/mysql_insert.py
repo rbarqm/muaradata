@@ -1,4 +1,4 @@
-from iriis_connection_library.core.insert_base import BaseInserter
+from ...core.insert_base import BaseInserter
 from time import sleep
 
 class MySQLInserter:
